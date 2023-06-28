@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="20" height="19" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="20" height="19" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="6">
  <tileset firstgid="1" name="Dungeon_Tileset" tilewidth="16" tileheight="16" tilecount="100" columns="10">
   <image source="Dungeon_Tileset.png" width="160" height="160"/>
  </tileset>
@@ -26,6 +26,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="5" name="Слой объектов 1">
+  <object id="5" name="Player" x="143" y="127.5" width="17" height="15.75"/>
+ </objectgroup>
  <layer id="3" name="Слой тайлов 1" width="20" height="19">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

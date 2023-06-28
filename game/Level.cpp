@@ -104,148 +104,124 @@ bool Level::LoadFromFile(std::string filename)
     
     for(const auto &layerElement: buffLayers)
     {
-        Layer layer;
+        if (layerElement.get()->getType() == tmx::Layer::Type::Tile) {
+            Layer layer;
 		
-        const auto &tileSets = map.getTilesets();
-        const auto &layerIDs = layerElement.get()->getLayerAs<tmx::TileLayer>().getTiles();
+            const auto &tileSets = map.getTilesets();
+            const auto &layerIDs = layerElement.get()->getLayerAs<tmx::TileLayer>().getTiles();
       
-        /**/
+            /**/
      
-        /**/
-        int x = 0;
-        int y = 0;
+            /**/
+            int x = 0;
+            int y = 0;
         
-        for (const auto &tileElement :layerIDs)
-        {
-            int tileGID =  tileElement.ID;
-            int subRectToUse = tileGID - firstTileID;
+            for (const auto &tileElement :layerIDs)
+            {
+                int tileGID =  tileElement.ID;
+                int subRectToUse = tileGID - firstTileID;
             
-			// Устанавливаем TextureRect каждого тайла
-            if (subRectToUse >= 0)
-            {
-                Sprite* sprite = new Sprite();
-                sprite->setTexture(tilesetImage);
-                sprite->setTextureRect(subRects[subRectToUse]);
-                sprite->setPosition(x * tileWidth, y * tileHeight);
-                sprite->setScale(1,1);
-                SDL_Rect textureRect = subRects[subRectToUse];
+			    // Устанавливаем TextureRect каждого тайла
+                if (subRectToUse >= 0)
+                {
+                    Sprite* sprite = new Sprite();
+                    sprite->setTexture(tilesetImage);
+                    sprite->setTextureRect(subRects[subRectToUse]);
+                    sprite->setPosition(x * tileWidth, y * tileHeight);
+                    sprite->setScale(1,1);
+                    SDL_Rect textureRect = subRects[subRectToUse];
 
 
-                layer.tiles.push_back(sprite);
-            }
+                    layer.tiles.push_back(sprite);
+                }
 
            
 
-            x++;
-            if (x >= width)
-            {
-                x = 0;
-                y++;
-                if(y >= height)
-                    y = 0;
+                x++;
+                if (x >= width)
+                {
+                    x = 0;
+                    y++;
+                    if(y >= height)
+                        y = 0;
+                }
             }
-        }
 
-        layers.push_back(layer);
+            layers.push_back(layer);
+        }else
+            if (layerElement.get()->getType() == tmx::Layer::Type::Object) {
+                auto const& objectGroup = layerElement.get()->getLayerAs<tmx::ObjectGroup>();
+                for (const auto& obj : objectGroup.getObjects()) {
+                    std::string objectType = obj.getType();
+                    std::string objectName = obj.getName();
+                   
 
-        
-    }
-    /**/
-    // Работа с объектами
-   /* TiXmlElement* objectGroupElement;
+                    int x = obj.getPosition().x;
+                    int y = obj.getPosition().y;
 
-	// Если есть слои объектов
-    if (map.FirstChildElement("objectgroup") != NULL)
-    {
-        objectGroupElement = map.FirstChildElement("objectgroup");
-        while (objectGroupElement)
-        {
-			// Контейнер <object>
-            TiXmlElement *objectElement;
-            objectElement = objectGroupElement->FirstChildElement("object");
-           
-			while(objectElement)
-            {
-				// Получаем все данные - тип, имя, позиция, etc
-                std::string objectType;
-                if (objectElement->Attribute("type") != NULL)
-                {
-                    objectType = objectElement->Attribute("type");
-                }
-                std::string objectName;
-                if (objectElement->Attribute("name") != NULL)
-                {
-                    objectName = objectElement->Attribute("name");
-                }
-                int x = atoi(objectElement->Attribute("x"));
-                int y = atoi(objectElement->Attribute("y"));
+                    int width, height;
 
-				int width, height;
+                    Sprite* sprite = new Sprite();
+                    sprite->setTexture(tilesetImage);
+                    sprite->setTextureRect(SDL_Rect{ 0,0,0,0 });
+                    sprite->setPosition(x, y);
+                    sprite->setScale(1, 1);
 
-				Sprite* sprite = new Sprite();
-                sprite->setTexture(tilesetImage);
-                sprite->setTextureRect(SDL_Rect{ 0,0,0,0 });
-                sprite->setPosition(x, y);
-                sprite->setScale(1,1);
-
-				if (objectElement->Attribute("width") != NULL)
-				{
-					width = atoi(objectElement->Attribute("width"));
-					height = atoi(objectElement->Attribute("height"));
-				}
-				else
-				{
-					width = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].w;
-					height = subRects[atoi(objectElement->Attribute("gid")) - firstTileID].h;
-				    sprite->setTextureRect(subRects[atoi(objectElement->Attribute("gid")) - firstTileID]);
-				}
-
-				// Экземпляр объекта
-                Object object;
-                object.name = objectName;
-                object.type = objectType;
-				object.sprite = sprite;
-
-                SDL_Rect objectRect;
-                objectRect.y = y;
-                objectRect.x = x;
-				objectRect.h = height;
-				objectRect.w = width;
-                object.rect = objectRect;
-
-				// "Переменные" объекта
-                TiXmlElement *properties;
-                properties = objectElement->FirstChildElement("properties");
-                if (properties != NULL)
-                {
-                    TiXmlElement *prop;
-                    prop = properties->FirstChildElement("property");
-                    if (prop != NULL)
+                    if (obj.getAABB().width)
                     {
-                        while(prop)
+                        width = obj.getAABB().width;
+                        height = obj.getAABB().height;
+                    }
+                    else
+                    {
+                        width = subRects[obj.getTileID() - firstTileID].w;
+                        height = subRects[obj.getTileID() - firstTileID].h;
+                        sprite->setTextureRect(subRects[obj.getTileID() - firstTileID]);
+                    }
+
+                    // Экземпляр объекта
+                    Object object;
+                    object.name = objectName;
+                    object.type = objectType;
+                    object.sprite = sprite;
+
+                    SDL_Rect objectRect;
+                    objectRect.y = y;
+                    objectRect.x = x;
+                    objectRect.h = height;
+                    objectRect.w = width;
+                    object.rect = objectRect;
+
+                    // "Переменные" объекта
+                    const auto& properties = obj.getProperties();
+                    if (!properties.empty())
+                    {
+                        for (const auto& prop : properties)
+
                         {
-                            std::string propertyName = prop->Attribute("name");
-                            std::string propertyValue = prop->Attribute("value");
+
+                            std::string propertyName = prop.getName();
+                            std::string propertyValue = prop.getStringValue();
 
                             object.properties[propertyName] = propertyValue;
 
-                            prop = prop->NextSiblingElement("property");
                         }
                     }
+
+                    // Пихаем объект в вектор
+                    objects.push_back(object);
                 }
 
-				// Пихаем объект в вектор
-                objects.push_back(object);
 
-                objectElement = objectElement->NextSiblingElement("object");
             }
-            objectGroupElement = objectGroupElement->NextSiblingElement("objectgroup");
-        }
+        
     }
-    else
-    {
-        std::cout << "No object layers found..." << std::endl;
-    }/**/
+    /*
+    // Работа с объектами
+   /* */
+   
+	// Если есть слои объектов
+   
 
     return true;
 }
