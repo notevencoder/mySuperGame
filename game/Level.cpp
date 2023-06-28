@@ -1,7 +1,12 @@
 #include "level.h"
 
 #include <iostream>
-#include "tinyxml.h"
+
+
+
+#include <tmxlite/Map.hpp>
+#include <tmxlite/TileLayer.hpp>
+
 
 
 int Object::GetPropertyInt(std::string name)
@@ -27,35 +32,34 @@ Level:: ~Level() {
 
 bool Level::LoadFromFile(std::string filename)
 {
-    TiXmlDocument levelFile(filename.c_str());
+
+    tmx::Map map;
+
 
 	// Загружаем XML-карту
-    if(!levelFile.LoadFile())
+    if(!map.load(filename))
     {
         std::cout << "Loading level \"" << filename << "\" failed." << std::endl;
         return false;
     }
 
-	// Работаем с контейнером map
-    TiXmlElement *map;
-    map = levelFile.FirstChildElement("map");
 
 	// Пример карты: <map version="1.0" orientation="orthogonal"
 	// width="10" height="10" tilewidth="34" tileheight="34">
-    width = atoi(map->Attribute("width"));
-    height = atoi(map->Attribute("height"));
-    tileWidth = atoi(map->Attribute("tilewidth"));
-    tileHeight = atoi(map->Attribute("tileheight"));
+    tmx::FloatRect bounds = map.getBounds();
+    tileWidth = map.getTileSize().x;
+    tileHeight = map.getTileSize().y;
+
+    width = map.getBounds().width / tileWidth;
+    height = map.getBounds().height / tileHeight;
+    
 
 	// Берем описание тайлсета и идентификатор первого тайла
-    TiXmlElement *tilesetElement;
-    tilesetElement = map->FirstChildElement("tileset");
-    firstTileID = atoi(tilesetElement->Attribute("firstgid"));
+    const auto& tilesetElement = map.getTilesets()[0];
+    firstTileID = tilesetElement.getFirstGID();
 
 	// source - путь до картинки в контейнере image
-    TiXmlElement *image;
-    image = tilesetElement->FirstChildElement("image");
-    std::string imagepath = image->Attribute("source");
+    std::string imagepath = tilesetElement.getImagePath();
 
 	// Пытаемся загрузить тайлсет
 	SDL_Surface* img = IMG_Load(imagepath.c_str());
@@ -79,9 +83,9 @@ bool Level::LoadFromFile(std::string filename)
     SDL_QueryTexture(tilesetImage, NULL, NULL, &size.x, &size.y);
     int columns = size.x / tileWidth;
     int rows = size.y / tileHeight;
-
+    
 	// Вектор из прямоугольников изображений (TextureRect)
-    std::vector<SDL_Rect> subRects;
+  /**/  std::vector<SDL_Rect> subRects;
 
 	for (int y = 0; y < rows; y++)
 	    for(int x = 0; x < columns; x++)
@@ -96,50 +100,26 @@ bool Level::LoadFromFile(std::string filename)
 	    }
     /**/
 	// Работа со слоями
-    TiXmlElement *layerElement;
-    layerElement = map->FirstChildElement("layer");
-    while(layerElement)
+    const auto& buffLayers = map.getLayers();
+    
+    for(const auto &layerElement: buffLayers)
     {
         Layer layer;
 		
-		// Если присутствует opacity, то задаем прозрачность слоя, иначе он полностью непрозрачен
-        if (layerElement->Attribute("opacity") != NULL)
-        {
-            float opacity = strtod(layerElement->Attribute("opacity"), NULL);
-            layer.opacity = 255 * opacity;
-        }
-        else
-        {
-            layer.opacity = 255;
-        }
-
-		// Контейнер <data>
-        TiXmlElement *layerDataElement;
-        layerDataElement = layerElement->FirstChildElement("data");
-
-        if(layerDataElement == NULL)
-        {
-            std::cout << "Bad map. No layer information found." << std::endl;
-        }
-
-		// Контейнер <tile> - описание тайлов каждого слоя
-        TiXmlElement *tileElement;
-        tileElement = layerDataElement->FirstChildElement("tile");
-
-        if(tileElement == NULL)
-        {
-            std::cout << "Bad map. No tile information found." << std::endl;
-            return false;
-        }
-
+        const auto &tileSets = map.getTilesets();
+        const auto &layerIDs = layerElement.get()->getLayerAs<tmx::TileLayer>().getTiles();
+      
+        /**/
+     
+        /**/
         int x = 0;
         int y = 0;
         
-        while(tileElement)
+        for (const auto &tileElement :layerIDs)
         {
-            int tileGID = atoi(tileElement->Attribute("gid"));
+            int tileGID =  tileElement.ID;
             int subRectToUse = tileGID - firstTileID;
-
+            
 			// Устанавливаем TextureRect каждого тайла
             if (subRectToUse >= 0)
             {
@@ -152,9 +132,9 @@ bool Level::LoadFromFile(std::string filename)
 
 
                 layer.tiles.push_back(sprite);
-            }/**/
+            }
 
-            tileElement = tileElement->NextSiblingElement("tile");
+           
 
             x++;
             if (x >= width)
@@ -168,17 +148,16 @@ bool Level::LoadFromFile(std::string filename)
 
         layers.push_back(layer);
 
-        layerElement = layerElement->NextSiblingElement("layer");
-        /**/
+        
     }
-    
+    /**/
     // Работа с объектами
-    TiXmlElement *objectGroupElement;
+   /* TiXmlElement* objectGroupElement;
 
 	// Если есть слои объектов
-    if (map->FirstChildElement("objectgroup") != NULL)
+    if (map.FirstChildElement("objectgroup") != NULL)
     {
-        objectGroupElement = map->FirstChildElement("objectgroup");
+        objectGroupElement = map.FirstChildElement("objectgroup");
         while (objectGroupElement)
         {
 			// Контейнер <object>
@@ -266,7 +245,7 @@ bool Level::LoadFromFile(std::string filename)
     else
     {
         std::cout << "No object layers found..." << std::endl;
-    }
+    }/**/
 
     return true;
 }
@@ -300,7 +279,6 @@ void Level::draw(SDL_Renderer *ren, SDL_Rect camera)
 	// Рисуем все тайлы (объекты НЕ рисуем!)
     for (int layer = 0; layer < layers.size(); layer++)
         for (int tile = 0; tile < layers[layer].tiles.size(); tile++) {
-            
             layers[layer].tiles[tile]->draw(ren, camera);
         }
 }

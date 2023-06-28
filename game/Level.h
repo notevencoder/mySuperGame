@@ -11,7 +11,6 @@
 #include "Vector2D.h"
 #include "Sprite.h"
 
-
 struct Object
 {
     

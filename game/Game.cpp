@@ -21,7 +21,7 @@ bool Game::init() {
 	}
 
 	level = new Level(renderer);
-	level->LoadFromFile("platformer.tmx");
+	level->LoadFromFile("test.tmx");
 
 	camera = { 0,0,0,0 };
 
