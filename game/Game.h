@@ -1,5 +1,7 @@
 #pragma once
 #include "Utils.h"
+#include "Level.h"
+#include "Box2d\Box2d.h"
 
 class Game
 {
@@ -15,5 +17,8 @@ private:
 
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
+	Level* level = nullptr;
+	Sprite* sprite;
+	SDL_Rect camera;
 };
 
