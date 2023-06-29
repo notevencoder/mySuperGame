@@ -23,7 +23,9 @@ std::string Object::GetPropertyString(std::string name)
 {
     return properties[name];
 }
-Level::Level(SDL_Renderer* ren) {
+Level::Level(SDL_Renderer* ren, b2World* worldd) {
+    
+    world = worldd;
     renderer = ren;
 }
 Level:: ~Level() {
@@ -185,7 +187,7 @@ bool Level::LoadFromFile(std::string filename)
                     object.type = objectType;
                     object.sprite = sprite;
 
-                    SDL_Rect objectRect;
+                    SDL_FRect objectRect;
                     objectRect.y = y;
                     objectRect.x = x;
                     objectRect.h = height;
@@ -207,6 +209,7 @@ bool Level::LoadFromFile(std::string filename)
 
                         }
                     }
+                    
 
                     // Пихаем объект в вектор
                     objects.push_back(object);
@@ -250,13 +253,17 @@ Vector2D Level::GetTileSize()
 	return Vector2D(tileWidth, tileHeight);
 }
 
-void Level::draw(SDL_Renderer *ren, SDL_Rect camera)
+
+void Level::draw(SDL_Renderer *ren, SDL_FRect camera)
 {
 	// Рисуем все тайлы (объекты НЕ рисуем!)
     for (int layer = 0; layer < layers.size(); layer++)
         for (int tile = 0; tile < layers[layer].tiles.size(); tile++) {
             layers[layer].tiles[tile]->draw(ren, camera);
         }
+    
 }
+
+
 
 /**/

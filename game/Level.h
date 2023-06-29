@@ -8,22 +8,23 @@
 #include <map>
 #include "SDL2\SDL.h"
 #include "SDL2\SDL_image.h"
+#include "Box2d\box2d.h"
 #include "Vector2D.h"
 #include "Sprite.h"
 
 struct Object
 {
-    
+
     int GetPropertyInt(std::string name);
     float GetPropertyFloat(std::string name);
     std::string GetPropertyString(std::string name);
 
     std::string name;
     std::string type;
-    SDL_Rect rect;
+    SDL_FRect rect;
     std::map<std::string, std::string> properties;
 
-	Sprite* sprite;
+    Sprite* sprite;
 };
 
 struct Layer
@@ -36,17 +37,21 @@ struct Layer
 class Level
 {
 public:
-    Level(SDL_Renderer*);
+    Level(SDL_Renderer*, b2World*);
     ~Level();
     bool LoadFromFile(std::string filename);
     Object GetObject(std::string name);
     std::vector<Object> GetObjects(std::string name);
-    void draw(SDL_Renderer *, SDL_Rect);
-	Vector2D GetTileSize();
-
+    void draw(SDL_Renderer*, SDL_FRect);
+    Vector2D GetTileSize();
+   
+    b2World* getWorld() { return world; }
+    SDL_Renderer* getRenderer() { return renderer; }
+    int getScale() { return scale; }
+    void setScale(int s) {  scale = s; }
 
 private:
-    
+
     int width, height, tileWidth, tileHeight;
     int firstTileID;
     SDL_Rect drawingBounds;
@@ -54,7 +59,9 @@ private:
     std::vector<Object> objects;
     std::vector<Layer> layers;
     SDL_Renderer* renderer;
-
+    b2World* world;
+    Object* player;
+    int scale = 1;
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
 	void setTextureRect( SDL_Rect);
 	void setPosition(int, int);
 	void setScale(int,int);
-	void draw(SDL_Renderer*,SDL_Rect);
+	void draw(SDL_Renderer*,SDL_FRect);
 	SDL_Rect getSize();
 private:
 	SDL_Rect size;

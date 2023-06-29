@@ -1,39 +1,5 @@
-﻿  Level.cpp
-C:\Users\AsisT\source\repos\game\include\Vector2D.h(16,31): warning C4244: return: преобразование "double" в "float", возможна потеря данных
-C:\Users\AsisT\source\repos\game\game\Level.cpp(19,18): warning C4244: return: преобразование "double" в "float", возможна потеря данных
-C:\Users\AsisT\source\repos\game\game\Level.cpp(30,20): warning C4150: удаление указателя на неполный тип "SDL_Renderer"; деструктор не вызван
-C:\Users\AsisT\source\repos\game\include\SDL2\SDL_render.h(141): message : см. объявление "SDL_Renderer"
-C:\Users\AsisT\source\repos\game\game\Level.cpp(53,35): warning C4244: =: преобразование "T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\AsisT\source\repos\game\game\Level.cpp(54,37): warning C4244: =: преобразование "T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\AsisT\source\repos\game\game\Level.cpp(159,27): warning C4244: инициализация: преобразование "const T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\AsisT\source\repos\game\game\Level.cpp(160,27): warning C4244: инициализация: преобразование "const T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\AsisT\source\repos\game\game\Level.cpp(172,46): warning C4244: =: преобразование "const T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\AsisT\source\repos\game\game\Level.cpp(173,47): warning C4244: =: преобразование "const T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\Users\AsisT\source\repos\game\game\Level.cpp(250,29): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\AsisT\source\repos\game\game\Level.cpp(250,18): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\AsisT\source\repos\game\game\Level.cpp(235): warning C4715: Level::GetObject: значение возвращается не при всех путях выполнения
+﻿  Game.cpp
+C:\Users\AsisT\source\repos\game\game\Game.cpp(97,65): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\AsisT\source\repos\game\game\Game.cpp(97,46): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+     Создается библиотека C:\Users\AsisT\source\repos\game\x64\Debug\game.lib и объект C:\Users\AsisT\source\repos\game\x64\Debug\game.exp
   game.vcxproj -> C:\Users\AsisT\source\repos\game\x64\Debug\game.exe

@@ -30,7 +30,7 @@ void Sprite::setPosition(int x, int y) {
 	size.y = dstrect.y = y;
 
 }
-void Sprite::draw(SDL_Renderer* ren, SDL_Rect camera) {
+void Sprite::draw(SDL_Renderer* ren, SDL_FRect camera) {
 	SDL_Rect finalDstrect = dstrect;
 	finalDstrect.x -= camera.x;
 	finalDstrect.y -= camera.y;
@@ -49,3 +49,5 @@ SDL_Rect Sprite::getSize() {
 	return size;
 
 }
+
+

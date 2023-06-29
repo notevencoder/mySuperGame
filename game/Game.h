@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Level.h"
 #include "Box2d\Box2d.h"
+#include "Player.h"
 
 class Game
 {
@@ -19,6 +20,8 @@ private:
 	SDL_Renderer* renderer = nullptr;
 	Level* level = nullptr;
 	Sprite* sprite;
-	SDL_Rect camera;
+	SDL_FRect camera;
+	b2World* world = nullptr;
+	Player player;
 };
 

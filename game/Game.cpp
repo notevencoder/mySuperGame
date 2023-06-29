@@ -20,11 +20,19 @@ bool Game::init() {
 		return false;
 	}
 
-	level = new Level(renderer);
+	b2Vec2 gravity(0.0f, 0.0f);
+	world = new b2World(gravity);
+
+	
+
+	level = new Level(renderer, world);
 	level->LoadFromFile("test.tmx");
+	level->setScale(5);
 
-	camera = { 0,0,0,0 };
-
+	player.init(level);
+	
+	
+	
 
 
 	return true;
@@ -40,6 +48,8 @@ void Game::GameLoop() {
 }
 
 void Game::handleInput() {
+
+
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)) {
@@ -70,19 +80,25 @@ void Game::handleInput() {
 		}
 	if (keystates[SDL_SCANCODE_ESCAPE])
 		isRunning = false;
+
+	player.handleInput();
 }
 
-void Game::update() {}
+void Game::update() {
+	world->Step(1.0f / 60.0f, 1, 1);
+	player.update();
+}
 
 void Game::draw() {
 	SDL_SetRenderDrawColor(renderer, 40,40,40,255);
 	SDL_RenderClear(renderer);
-	SDL_Rect vp = {20,20,400,200};
-
-	SDL_RenderSetScale(renderer, 2,2);
+	SDL_Rect vp = {0,0,SCREEN_WIDTH,SCREEN_HEIGHT};
+	player.setViewport(vp);
+	SDL_RenderSetScale(renderer, level->getScale(), level->getScale());
 	SDL_RenderSetViewport(renderer, &vp);
 	
-	level->draw(renderer, camera);
+	level->draw(renderer, *player.getCamera());
+	player.draw(renderer, *player.getCamera());
 	SDL_RenderPresent(renderer);
 }
 
