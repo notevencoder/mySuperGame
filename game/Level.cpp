@@ -27,6 +27,7 @@ Level::Level(SDL_Renderer* ren, b2World* worldd) {
     
     world = worldd;
     renderer = ren;
+    viewport = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
 }
 Level:: ~Level() {
     delete renderer;
@@ -194,6 +195,9 @@ bool Level::LoadFromFile(std::string filename)
                     objectRect.w = width;
                     object.rect = objectRect;
 
+                    
+
+
                     // "Переменные" объекта
                     const auto& properties = obj.getProperties();
                     if (!properties.empty())
@@ -248,9 +252,9 @@ std::vector<Object> Level::GetObjects(std::string name)
 	return vec;
 }
 
-Vector2D Level::GetTileSize()
+b2Vec2 Level::GetTileSize()
 {
-	return Vector2D(tileWidth, tileHeight);
+	return b2Vec2(tileWidth, tileHeight);
 }
 
 

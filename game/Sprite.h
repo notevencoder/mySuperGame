@@ -9,13 +9,14 @@ public:
 	~Sprite();
 	void setTexture(SDL_Texture*);
 	void setTextureRect( SDL_Rect);
-	void setPosition(int, int);
+	void setPosition(float, float);
 	void setScale(int,int);
 	void draw(SDL_Renderer*,SDL_FRect);
-	SDL_Rect getSize();
+	SDL_FRect getSize();
 private:
-	SDL_Rect size;
-	SDL_Rect dstrect , srcrect;
+	SDL_FRect size;
+	SDL_FRect dstrect;
+	SDL_Rect srcrect;
 	SDL_Texture* texture = nullptr;
 };
 

@@ -24,17 +24,19 @@ void Sprite::setTextureRect(SDL_Rect src) {
 		dstrect.h = size.h;
 
 }
-void Sprite::setPosition(int x, int y) {
+void Sprite::setPosition(float x, float y) {
 	
 	size.x = dstrect.x = x;
 	size.y = dstrect.y = y;
 
 }
 void Sprite::draw(SDL_Renderer* ren, SDL_FRect camera) {
-	SDL_Rect finalDstrect = dstrect;
+
+	SDL_FRect finalDstrect = dstrect;
 	finalDstrect.x -= camera.x;
 	finalDstrect.y -= camera.y;
-	SDL_RenderCopy(ren, texture, &srcrect, &finalDstrect);
+
+	SDL_RenderCopyF(ren, texture, &srcrect, &finalDstrect);
 	
 
 }
@@ -45,7 +47,7 @@ void Sprite::setScale(int swidth, int sheight) {
 	dstrect.h = size.h * sheight;
 }
 
-SDL_Rect Sprite::getSize() {
+SDL_FRect Sprite::getSize() {
 	return size;
 
 }

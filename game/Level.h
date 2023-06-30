@@ -1,11 +1,13 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include "Utils.h"
 
 #include <string>
 #include <vector>
 #include <memory>
 #include <map>
+#include <unordered_map>
 #include "SDL2\SDL.h"
 #include "SDL2\SDL_image.h"
 #include "Box2d\box2d.h"
@@ -22,8 +24,9 @@ struct Object
     std::string name;
     std::string type;
     SDL_FRect rect;
-    std::map<std::string, std::string> properties;
-
+    //std::map<std::string, std::string> properties;
+    std::unordered_map<std::string, std::string> properties;
+    b2Body* body;
     Sprite* sprite;
 };
 
@@ -43,12 +46,13 @@ public:
     Object GetObject(std::string name);
     std::vector<Object> GetObjects(std::string name);
     void draw(SDL_Renderer*, SDL_FRect);
-    Vector2D GetTileSize();
+    b2Vec2 GetTileSize();
    
     b2World* getWorld() { return world; }
     SDL_Renderer* getRenderer() { return renderer; }
-    int getScale() { return scale; }
-    void setScale(int s) {  scale = s; }
+    float getScale() { return scale; }
+    void setScale(float s) { if (s > 1 && s < 20) scale = s; }
+    SDL_Rect getViewport() { return viewport; }
 
 private:
 
@@ -61,7 +65,8 @@ private:
     SDL_Renderer* renderer;
     b2World* world;
     Object* player;
-    int scale = 1;
+    float scale = 1;
+    SDL_Rect viewport;
 };
 
 #endif

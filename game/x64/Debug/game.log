@@ -1,5 +1,2 @@
-﻿  Game.cpp
-C:\Users\AsisT\source\repos\game\game\Game.cpp(97,65): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-C:\Users\AsisT\source\repos\game\game\Game.cpp(97,46): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
-     Создается библиотека C:\Users\AsisT\source\repos\game\x64\Debug\game.lib и объект C:\Users\AsisT\source\repos\game\x64\Debug\game.exp
+﻿  Player.cpp
   game.vcxproj -> C:\Users\AsisT\source\repos\game\x64\Debug\game.exe

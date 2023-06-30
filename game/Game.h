@@ -3,7 +3,8 @@
 #include "Level.h"
 #include "Box2d\Box2d.h"
 #include "Player.h"
-
+#include "DebugRenderer.h"
+#include <iostream>
 class Game
 {
 public:
@@ -17,11 +18,12 @@ private:
 	bool isRunning = true;
 
 	SDL_Window* window = nullptr;
-	SDL_Renderer* renderer = nullptr;
+	SDL_Renderer* renderer = nullptr, *debugRen = nullptr;
 	Level* level = nullptr;
 	Sprite* sprite;
 	SDL_FRect camera;
 	b2World* world = nullptr;
 	Player player;
+	DebugRenderer* debug ;
 };
 
