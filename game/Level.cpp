@@ -9,6 +9,7 @@
 
 
 
+
 int Object::GetPropertyInt(std::string name)
 {
     return atoi(properties[name].c_str());
@@ -28,6 +29,7 @@ Level::Level(SDL_Renderer* ren, b2World* worldd) {
     world = worldd;
     renderer = ren;
     viewport = { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT };
+
 }
 Level:: ~Level() {
     delete renderer;
@@ -214,7 +216,15 @@ bool Level::LoadFromFile(std::string filename)
                         }
                     }
                     
+                    b2BodyType btype = b2BodyType::b2_dynamicBody;
 
+                    if (objectName == "Wall") {
+
+                        btype = b2BodyType::b2_staticBody;
+                    }
+
+                    if (layerElement.get()->getName() != "Player")
+                     bodyFactory::getInstance().createRectBody(world, obj, btype);
                     // Пихаем объект в вектор
                     objects.push_back(object);
                 }

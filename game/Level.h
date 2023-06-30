@@ -13,6 +13,7 @@
 #include "Box2d\box2d.h"
 #include "Vector2D.h"
 #include "Sprite.h"
+#include "bodyFactory.h"
 
 struct Object
 {

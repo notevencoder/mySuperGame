@@ -28,7 +28,7 @@ void Player::init(Level* lvl) {
 
 	sprite = new Sprite();
 	sprite->setTexture(tex);
-	sprite->setTextureRect(SDL_Rect{ 16,16,16,16 });
+	sprite->setTextureRect(SDL_Rect{ 0,0,16,16 });
 	sprite->setPosition(playerObject.rect.x, playerObject.rect.y);
 	sprite->setScale(1, 1);
 
