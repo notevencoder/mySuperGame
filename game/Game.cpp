@@ -25,7 +25,7 @@ bool Game::init() {
 	
 	
 	level = new Level(renderer, world);
-	level->LoadFromFile("test.tmx");
+	level->LoadFromFile("level1/level1.tmx");
 	level->setScale(5);
 
 	player.init(level);
@@ -105,13 +105,14 @@ void Game::draw() {
 	debug->setCamera(*player.getCamera());
 
 	world->DebugDraw();
-
+	
 	SDL_RenderPresent(renderer);
 }
 
 
 void Game::ShutDown() {
 	SDL_DestroyRenderer(renderer);
+	SDL_DestroyRenderer(debugRen);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 

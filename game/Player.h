@@ -13,11 +13,14 @@ public:
 	void setBody(b2Body* b) { body = b; }
 	SDL_FRect* getCamera() { return &cam; }
 	b2Body* getBody() { return body; }
-	void inline move(b2Vec2 pos) { body->ApplyForceToCenter(pos, true); }
+	void move(b2Vec2 pos);
 
 	void draw(SDL_Renderer* ren, SDL_FRect rec);
 private:
+	b2Vec2 desiredVel, currVel;
+	float maxVelocity = 3;
 	b2Body* body = nullptr;
+	b2Vec2 desiredPosition;
 	Sprite* sprite = nullptr;
 	Level* level;
 	SDL_FRect cam = {0,0,0,0};
