@@ -1,4 +1,5 @@
 #include "DebugRenderer.h"
+#include "Game.h"
 
 
 void DebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
@@ -13,8 +14,8 @@ void DebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
    
     //fill in vertex positions as directed by Box2D
     for (int i = 0; i < vertexCount; i++) {
-        points[i].x   = vertices[i].x - camera.x;
-        points[i].y   = vertices[i].y - camera.y;
+        points[i].x   = vertices[i].x - Game::getInstance()->getCamera()->x;
+        points[i].y   = vertices[i].y - Game::getInstance()->getCamera()->y;
     }
     points[vertexCount] = points[0];
     SDL_RenderDrawLinesF(ren, points, vertexCount + 1);

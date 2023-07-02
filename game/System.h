@@ -1,10 +1,15 @@
 #pragma once
 #include "Box2d\box2d.h"
+#include "SDL2\SDL.h"
 #include "Sprite.h"
 #include  <set>
 #include  <bitset>
+#include  <vector>
 
-using Entity = std::uint_fast8_t;
+
+
+
+using Entity = std::uint32_t;
 const Entity MAX_ENTITIES = 256;
 
 using ComponentType = std::uint8_t;
@@ -14,10 +19,10 @@ using Signature = std::bitset<MAX_COMPONENTS>;
 
 struct Transform {
 	b2Vec2 position;
-	b2Vec2 scale;
 };
 
 struct Drawable {
+	SDL_Renderer* ren;
 	Sprite sprite;
 };
 
@@ -28,7 +33,7 @@ struct Animated {
 };
 
 struct Body {
-	b2Body body;
+	b2Body* body;
 };
 
 class System

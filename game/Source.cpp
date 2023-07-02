@@ -4,12 +4,12 @@
 int main(int argc, char* argv[]) {
 
 	/**/
-	Game game;
+	Game* game = Game::getInstance();
 
-	if(game.init())
-		game.GameLoop();
+	if(game)
+		game->GameLoop();
 
-	game.ShutDown();
+	game->ShutDown();
 	/*
 	SDL_Window* window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);

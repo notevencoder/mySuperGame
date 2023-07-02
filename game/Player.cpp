@@ -1,14 +1,17 @@
 #include "Player.h"
 #include<iostream>
 #include "Coordinator.h"
+#include "Game.h"
 
-extern Coordinator coordinator;
 
 Player::Player() {
 	body = nullptr;
 	level = nullptr;
+
 }
 void Player::init(Level* lvl) {
+
+	entity = Coordinator::getInstance()->CreateEntity();
 	level = lvl;
 
 	desiredVel = currVel = {0,0};
@@ -38,13 +41,19 @@ void Player::init(Level* lvl) {
 	sprite->setTextureRect(SDL_Rect{ 0,0,16,16 });
 	sprite->setPosition(playerObject.rect.x, playerObject.rect.y);
 	sprite->setScale(1, 1);
-
+	
 	b2Vec2 pos = body->GetPosition();
 	cam = { pos.x - 400 / 2, pos.y - 200 / 2, 0,0 };
 	
 	b2MassData md = body->GetMassData();
 	md.mass = 4;
 	body->SetMassData(&md);
+	
+	Coordinator::getInstance()->AddComponent(entity, Transform{ pos });
+	Coordinator::getInstance()->AddComponent(entity, Drawable{ level->getRenderer(), *sprite });
+	Coordinator::getInstance()->AddComponent(entity, Body{body});
+
+
 }
 
 void Player::handleInput() {
@@ -66,36 +75,26 @@ void Player::handleInput() {
 	move(vec);
 }
 
-void Player::draw(SDL_Renderer* ren, SDL_FRect camera) {
+void Player::draw(SDL_Renderer* ren) {
 	//b2Vec2 ss = body->GetPosition();
-	auto shape = body->GetFixtureList()[0].GetShape();
-	body->SetTransform(body->GetPosition(), 0.f);
-	b2AABB aabb;
-	shape->ComputeAABB(&aabb, body->GetTransform(), 0);
-
-
-	b2Vec2 center = body->GetFixtureList()[0].GetAABB(0).GetCenter();
-	auto lowerBound = body->GetFixtureList()[0].GetAABB(0).lowerBound;
-	auto higherBound = body->GetFixtureList()[0].GetAABB(0).upperBound;
-
-	float width = higherBound.x - lowerBound.x;
-	float height = higherBound.y - lowerBound.y;
-	sprite->setPosition(center.x - width / 2, center.y - height/2);
-	sprite->draw(ren,cam);
+	/**/
+	auto camera = Game::getInstance()->getCamera();
+	//sprite->draw(ren,*camera);
 	
 	
-	center = body->GetFixtureList()[0].GetAABB(0).GetCenter();
+	auto center = body->GetFixtureList()[0].GetAABB(0).GetCenter();
 	SDL_SetRenderDrawColor(ren,255,0,0,1);
-	SDL_RenderDrawLineF(ren, center.x - cam.x, center.y - cam.y, desiredPosition.x - cam.x, desiredPosition.y - cam.y);
-	
+	SDL_RenderDrawLineF(ren, center.x - camera->x, center.y - camera->y, desiredPosition.x - camera->x, desiredPosition.y - camera->y);
+	/**/
 	
 }
 
 
 void Player::update(){
+	auto camera =  Game::getInstance()->getCamera();
 	b2Vec2 ss = body->GetPosition();
-	cam.x = ss.x - level->getViewport().w / 2 / level->getScale();
-	cam.y = ss.y - level->getViewport().h / 2 / level->getScale();/**/
+	camera->x = ss.x - level->getViewport().w / 2 / level->getScale();
+	camera->y = ss.y - level->getViewport().h / 2 / level->getScale();/**/
 
 }
 

@@ -10,10 +10,14 @@ public:
 	{
 		// Create pointers to each manager
 		mComponentManager = std::make_unique<ComponentManager>();
-		mEntityManager = std::make_unique<EntityManager>();
-		mSystemManager = std::make_unique<SystemManager>();
+		mEntityManager =	std::make_unique<EntityManager>();
+		mSystemManager =	std::make_unique<SystemManager>();
 	}
 
+	static Coordinator* getInstance() {
+		static Coordinator instance;
+		return &instance;
+	}
 
 	// Entity methods
 	Entity CreateEntity()

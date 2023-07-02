@@ -12,11 +12,11 @@ public:
 	void handleInput();
 	void update();
 	void setBody(b2Body* b) { body = b; }
-	SDL_FRect* getCamera() { return &cam; }
+	SDL_FRect getCamera() { return cam; }
 	b2Body* getBody() { return body; }
 	void move(b2Vec2 pos);
 
-	void draw(SDL_Renderer* ren, SDL_FRect rec);
+	void draw(SDL_Renderer* ren);
 private:
 	b2Vec2 desiredVel, currVel;
 	float maxVelocity = 3;
@@ -25,8 +25,7 @@ private:
 	Sprite* sprite = nullptr;
 	Level* level;
 	SDL_FRect cam = {0,0,0,0};
-
-
+	Entity entity;
 
 };
 

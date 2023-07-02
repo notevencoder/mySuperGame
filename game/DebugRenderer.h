@@ -8,8 +8,7 @@
 class DebugRenderer : public b2Draw
 {
 public:
-    DebugRenderer(SDL_Renderer* renderer, SDL_FRect cam) { ren = renderer; camera = cam; }
-    void setCamera(SDL_FRect cam) { camera = cam; }
+    DebugRenderer(SDL_Renderer* renderer) { ren = renderer; }
     void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {}
     void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
     void DrawCircle(const b2Vec2& center, float radius, const b2Color& color) {}
@@ -19,6 +18,5 @@ public:
     void DrawPoint(const b2Vec2& p, float size, const b2Color& color) {};
 private:
     SDL_Renderer* ren;
-    SDL_FRect camera;
 };
 

@@ -1,4 +1,7 @@
 #include "Game.h"
+#include "Coordinator.h"
+
+
 
 
 bool Game::init() {
@@ -19,6 +22,16 @@ bool Game::init() {
 		std::cout << "SDL failed to init:" << SDL_GetError() << '\n';
 		return false;
 	}
+	Coordinator::getInstance()->Init();
+
+	Coordinator::getInstance()->RegisterComponent<Animated>();
+	Coordinator::getInstance()->RegisterComponent<Drawable>();
+	Coordinator::getInstance()->RegisterComponent<Transform>();
+	Coordinator::getInstance()->RegisterComponent<Body>();
+
+	drawingSystem = Coordinator::getInstance()->RegisterSystem<DrawingSystem>();
+
+	
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	world = new b2World(gravity);
@@ -30,9 +43,9 @@ bool Game::init() {
 
 	player.init(level);
 	
+	camera = { player.getBody()->GetPosition().x - 400 / 2, player.getBody()->GetPosition().y - 200 / 2, 0,0 };
 	
-	
-	debug = new DebugRenderer(renderer, *player.getCamera());
+	debug = new DebugRenderer(renderer);
 	debug->SetFlags(b2Draw::e_shapeBit);
 	world->SetDebugDraw(debug);
 
@@ -100,9 +113,10 @@ void Game::draw() {
 	SDL_RenderSetViewport(renderer, &vp);
 
 
-	level->draw(renderer, *player.getCamera());
-	player.draw(renderer, *player.getCamera());
-	debug->setCamera(*player.getCamera());
+	level->draw(renderer, camera);
+	
+	drawingSystem.get()->draw();
+	player.draw(renderer);
 
 	world->DebugDraw();
 	

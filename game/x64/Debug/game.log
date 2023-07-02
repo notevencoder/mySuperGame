@@ -1,3 +1,5 @@
-﻿  enemy.cpp
-     Создается библиотека C:\Users\AsisT\source\repos\game\x64\Debug\game.lib и объект C:\Users\AsisT\source\repos\game\x64\Debug\game.exp
+﻿  DrawingSystem.cpp
+  Game.cpp
+  Player.cpp
+  Создание кода...
   game.vcxproj -> C:\Users\AsisT\source\repos\game\x64\Debug\game.exe

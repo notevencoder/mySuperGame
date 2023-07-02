@@ -4,14 +4,20 @@
 #include "Box2d\Box2d.h"
 #include "Player.h"
 #include "DebugRenderer.h"
+#include "DrawingSystem.h"
 #include <iostream>
+
 class Game
 {
 public:
-	bool init();
+	static Game* getInstance() { static Game instance; return& instance; }
 	void GameLoop();
 	void ShutDown();
+
+	SDL_FRect* getCamera() { return &camera; }
 private:
+	bool init();
+	Game() { init(); }
 	void handleInput();
 	void update();
 	void draw();
@@ -21,9 +27,10 @@ private:
 	SDL_Renderer* renderer = nullptr, *debugRen = nullptr;
 	Level* level = nullptr;
 	Sprite* sprite;
-	SDL_FRect camera;
 	b2World* world = nullptr;
 	Player player;
-	DebugRenderer* debug ;
+	DebugRenderer* debug;
+	std::shared_ptr<DrawingSystem> drawingSystem;
+	SDL_FRect camera;
 };
 

@@ -149,9 +149,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bodyFactory.cpp" />
+    <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="DebugRenderer.cpp" />
+    <ClCompile Include="DrawingSystem.cpp" />
     <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -164,9 +165,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bodyFactory.h" />
+    <ClInclude Include="Coordinator.h" />
     <ClInclude Include="DebugRenderer.h" />
+    <ClInclude Include="DrawingSystem.h" />
     <ClInclude Include="enemy.h" />
-    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="IComponentArray.h" />
+    <ClInclude Include="SystemManager.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />

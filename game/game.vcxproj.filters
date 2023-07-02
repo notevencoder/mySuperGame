@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\EGS">
+      <UniqueIdentifier>{f6f34c7d-5a17-45f8-b436-441a0bdb1854}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\EGS">
+      <UniqueIdentifier>{26c50a3d-f26b-4a72-8f16-f517ce79a80a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Systems">
+      <UniqueIdentifier>{65b397d0-473d-46c5-950d-c782334b53f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Systems">
+      <UniqueIdentifier>{63303364-4d78-4ebb-81ef-4006ca95efcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -39,9 +51,6 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -53,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="enemy.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Coordinator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawingSystem.cpp">
+      <Filter>Исходные файлы\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,9 +86,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Level.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -88,6 +100,27 @@
     </ClInclude>
     <ClInclude Include="enemy.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Файлы заголовков\EGS</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemManager.h">
+      <Filter>Файлы заголовков\EGS</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Файлы заголовков\EGS</Filter>
+    </ClInclude>
+    <ClInclude Include="IComponentArray.h">
+      <Filter>Файлы заголовков\EGS</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>Файлы заголовков\EGS</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinator.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingSystem.h">
+      <Filter>Файлы заголовков\Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
