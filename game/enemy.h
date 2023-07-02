@@ -1,5 +1,8 @@
 #pragma once
-class enemy
+#include "System.h"
+class Enemy
 {
+private:
+	Entity entity;
 };
 

@@ -6,6 +6,10 @@
 #include "DebugRenderer.h"
 #include "DrawingSystem.h"
 #include <iostream>
+#include "Enemy.h"
+
+
+
 
 class Game
 {
@@ -15,6 +19,9 @@ public:
 	void ShutDown();
 
 	SDL_FRect* getCamera() { return &camera; }
+	SDL_Renderer* getRenderer() { return renderer; }
+	SDL_Window* getWindow() { return window; }
+
 private:
 	bool init();
 	Game() { init(); }
@@ -22,11 +29,9 @@ private:
 	void update();
 	void draw();
 	bool isRunning = true;
-
-	SDL_Window* window = nullptr;
+	SDL_Window* window;
 	SDL_Renderer* renderer = nullptr, *debugRen = nullptr;
 	Level* level = nullptr;
-	Sprite* sprite;
 	b2World* world = nullptr;
 	Player player;
 	DebugRenderer* debug;

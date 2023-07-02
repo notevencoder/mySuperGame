@@ -152,12 +152,11 @@
     <ClCompile Include="Coordinator.cpp" />
     <ClCompile Include="DebugRenderer.cpp" />
     <ClCompile Include="DrawingSystem.cpp" />
-    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
@@ -168,7 +167,7 @@
     <ClInclude Include="Coordinator.h" />
     <ClInclude Include="DebugRenderer.h" />
     <ClInclude Include="DrawingSystem.h" />
-    <ClInclude Include="enemy.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="IComponentArray.h" />
@@ -177,7 +176,6 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Utils.h" />

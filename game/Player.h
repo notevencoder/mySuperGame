@@ -1,5 +1,4 @@
 #pragma once
-#include "Sprite.h"
 #include "Level.h"
 #include "Box2d\box2d.h"
 #include "Utils.h"
@@ -22,7 +21,6 @@ private:
 	float maxVelocity = 3;
 	b2Body* body = nullptr;
 	b2Vec2 desiredPosition;
-	Sprite* sprite = nullptr;
 	Level* level;
 	SDL_FRect cam = {0,0,0,0};
 	Entity entity;

@@ -3,8 +3,11 @@
 #include "Game.h"
 
 
+
 void DrawingSystem::draw() {
+	
 	for (auto& entity : enteties) {
+
 		auto& sprite = Coordinator::getInstance()->GetComponent<Drawable>(entity);
 		auto& body = Coordinator::getInstance()->GetComponent<Body>(entity).body;
 
@@ -21,8 +24,20 @@ void DrawingSystem::draw() {
 		float width = higherBound.x - lowerBound.x;
 		float height = higherBound.y - lowerBound.y;
 
-		sprite.sprite.setPosition(center.x - width / 2, center.y - height / 2);;
-		sprite.sprite.draw(sprite.ren, *Game::getInstance()->getCamera());
+		sprite.dstrect.x = center.x - width / 2;
+		sprite.dstrect.y = center.y - height / 2;
+
+		auto window = Game::getInstance()->getWindow();
+		auto ren = SDL_GetRenderer(window);
+		
+		SDL_Rect vp;
+		SDL_FPoint scale;
+		SDL_RenderGetViewport(ren, &vp);
+		SDL_RenderGetScale(ren, &scale.x, &scale.y);
+		auto camera = Game::getInstance()->getCamera();
+		//sprite.dstrect = { sprite.dstrect.x - camera->x, sprite.dstrect.y - camera->y};
+
+		SDL_RenderCopyF(ren, sprite.texture, &sprite.srcrect, &sprite.dstrect);
 
 	}
 

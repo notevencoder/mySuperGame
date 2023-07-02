@@ -12,8 +12,9 @@
 #include "SDL2\SDL_image.h"
 #include "Box2d\box2d.h"
 #include "Vector2D.h"
-#include "Sprite.h"
 #include "bodyFactory.h"
+#include "Enemy.h"
+#include "Coordinator.h"
 
 struct Object
 {
@@ -28,13 +29,13 @@ struct Object
     //std::map<std::string, std::string> properties;
     std::unordered_map<std::string, std::string> properties;
     b2Body* body;
-    Sprite* sprite;
+    //Sprite* sprite;
 };
 
 struct Layer
 {
     int opacity;
-    std::vector<Sprite*> tiles;
+  //  std::vector<Sprite*> tiles;
 };
 
 
@@ -68,6 +69,7 @@ private:
     Object* player;
     float scale = 1;
     SDL_Rect viewport;
+    std::vector<Entity*> enemies;
 };
 
 #endif

@@ -101,7 +101,11 @@ void Game::handleInput() {
 
 void Game::update() {
 	world->Step(1.0f / 60.0f, 1, 1);
-	player.update();
+	auto camera = getCamera();
+	b2Vec2 ss = player.getBody()->GetPosition();
+
+	camera->x = ss.x - level->getViewport().w / 2 / level->getScale();
+	camera->y = ss.y - level->getViewport().h / 2 / level->getScale();/**/
 }
 
 void Game::draw() {
@@ -111,13 +115,8 @@ void Game::draw() {
 	SDL_Rect vp = level->getViewport();
 	SDL_RenderSetScale(renderer, level->getScale(), level->getScale());
 	SDL_RenderSetViewport(renderer, &vp);
-
-
-	level->draw(renderer, camera);
 	
 	drawingSystem.get()->draw();
-	player.draw(renderer);
-
 	world->DebugDraw();
 	
 	SDL_RenderPresent(renderer);

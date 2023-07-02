@@ -6,6 +6,7 @@
 
 #include <tmxlite/Map.hpp>
 #include <tmxlite/TileLayer.hpp>
+#include "Game.h"
 
 
 
@@ -129,15 +130,16 @@ bool Level::LoadFromFile(std::string filename)
 			    // Устанавливаем TextureRect каждого тайла
                 if (subRectToUse >= 0)
                 {
-                    Sprite* sprite = new Sprite();
+                    /*Sprite* sprite = new Sprite();
                     sprite->setTexture(tilesetImage);
                     sprite->setTextureRect(subRects[subRectToUse]);
                     sprite->setPosition(x * tileWidth, y * tileHeight);
                     sprite->setScale(1,1);
                     SDL_Rect textureRect = subRects[subRectToUse];
-
+                    
 
                     layer.tiles.push_back(sprite);
+                    /**/
                 }
 
            
@@ -157,6 +159,7 @@ bool Level::LoadFromFile(std::string filename)
             if (layerElement.get()->getType() == tmx::Layer::Type::Object) {
                 auto const& objectGroup = layerElement.get()->getLayerAs<tmx::ObjectGroup>();
                 for (const auto& obj : objectGroup.getObjects()) {
+                   
                     std::string objectType = obj.getType();
                     std::string objectName = obj.getName();
                    
@@ -165,13 +168,13 @@ bool Level::LoadFromFile(std::string filename)
                     int y = obj.getPosition().y;
 
                     int width, height;
-
+                    /*
                     Sprite* sprite = new Sprite();
                     sprite->setTexture(tilesetImage);
                     sprite->setTextureRect(SDL_Rect{ 0,0,0,0 });
                     sprite->setPosition(x, y);
                     sprite->setScale(1, 1);
-
+                    /**/
                     if (obj.getAABB().width)
                     {
                         width = obj.getAABB().width;
@@ -181,14 +184,14 @@ bool Level::LoadFromFile(std::string filename)
                     {
                         width = subRects[obj.getTileID() - firstTileID].w;
                         height = subRects[obj.getTileID() - firstTileID].h;
-                        sprite->setTextureRect(subRects[obj.getTileID() - firstTileID]);
+                        //sprite->setTextureRect(subRects[obj.getTileID() - firstTileID]);
                     }
 
                     // Экземпляр объекта
                     Object object;
                     object.name = objectName;
                     object.type = objectType;
-                    object.sprite = sprite;
+                    //object.sprite = sprite;
 
                     SDL_FRect objectRect;
                     objectRect.y = y;
@@ -222,9 +225,11 @@ bool Level::LoadFromFile(std::string filename)
 
                         btype = b2BodyType::b2_staticBody;
                     }
+             
 
                     if (layerElement.get()->getName() != "Player")
                      bodyFactory::getInstance().createRectBody(world, obj, btype);
+                    
                     // Пихаем объект в вектор
                     objects.push_back(object);
                 }
@@ -270,12 +275,13 @@ b2Vec2 Level::GetTileSize()
 
 void Level::draw(SDL_Renderer *ren, SDL_FRect camera)
 {
+    /*
 	// Рисуем все тайлы (объекты НЕ рисуем!)
     for (int layer = 0; layer < layers.size(); layer++)
         for (int tile = 0; tile < layers[layer].tiles.size(); tile++) {
             layers[layer].tiles[tile]->draw(ren, camera);
         }
-    
+    /**/
 }
 
 

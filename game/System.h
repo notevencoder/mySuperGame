@@ -1,7 +1,6 @@
 #pragma once
 #include "Box2d\box2d.h"
 #include "SDL2\SDL.h"
-#include "Sprite.h"
 #include  <set>
 #include  <bitset>
 #include  <vector>
@@ -22,13 +21,14 @@ struct Transform {
 };
 
 struct Drawable {
-	SDL_Renderer* ren;
-	Sprite sprite;
+	SDL_FRect size;
+	SDL_FRect dstrect;
+	SDL_Rect srcrect;
+	SDL_Texture* texture = nullptr;
 };
 
 struct Animated {
 	int size;
-	std::vector<Sprite> frames;
 	float speed;
 };
 

@@ -35,13 +35,13 @@ void Player::init(Level* lvl) {
 
 	fixDef.shape = &shape;
 	body->CreateFixture(&fixDef);
-
+	/*
 	sprite = new Sprite();
 	sprite->setTexture(tex);
 	sprite->setTextureRect(SDL_Rect{ 0,0,16,16 });
 	sprite->setPosition(playerObject.rect.x, playerObject.rect.y);
 	sprite->setScale(1, 1);
-	
+	/**/
 	b2Vec2 pos = body->GetPosition();
 	cam = { pos.x - 400 / 2, pos.y - 200 / 2, 0,0 };
 	
@@ -49,8 +49,12 @@ void Player::init(Level* lvl) {
 	md.mass = 4;
 	body->SetMassData(&md);
 	
+	Drawable lol;
+	lol.texture = tex;
+	lol.srcrect = SDL_Rect{ 0,0,16,16 };
+	lol.dstrect = SDL_FRect{ body->GetPosition().x, body->GetPosition().y,16,16 };
 	Coordinator::getInstance()->AddComponent(entity, Transform{ pos });
-	Coordinator::getInstance()->AddComponent(entity, Drawable{ level->getRenderer(), *sprite });
+	Coordinator::getInstance()->AddComponent(entity, lol);
 	Coordinator::getInstance()->AddComponent(entity, Body{body});
 
 
@@ -91,10 +95,7 @@ void Player::draw(SDL_Renderer* ren) {
 
 
 void Player::update(){
-	auto camera =  Game::getInstance()->getCamera();
-	b2Vec2 ss = body->GetPosition();
-	camera->x = ss.x - level->getViewport().w / 2 / level->getScale();
-	camera->y = ss.y - level->getViewport().h / 2 / level->getScale();/**/
+
 
 }
 
