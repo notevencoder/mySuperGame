@@ -53,7 +53,8 @@ void Player::init(Level* lvl) {
 	lol.texture = tex;
 	lol.srcrect = SDL_Rect{ 0,0,16,16 };
 	lol.dstrect = SDL_FRect{ body->GetPosition().x, body->GetPosition().y,16,16 };
-	Coordinator::getInstance()->AddComponent(entity, Transform{ pos });
+	
+	Coordinator::getInstance()->AddComponent(entity, Transform{ pos.x, pos.y, playerObject.rect.w,playerObject.rect.h });
 	Coordinator::getInstance()->AddComponent(entity, lol);
 	Coordinator::getInstance()->AddComponent(entity, Body{body});
 
@@ -109,29 +110,9 @@ float map(float value,
 	return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 }
 void Player::move(b2Vec2 velocity) {
-	/*auto maxVel = maxVelocity * 0.16 * 100;
-
-	velocity *= maxVel;
-
-	currVel = body->GetLinearVelocity();
 	
 
 	
-
-	desiredVel = velocity;
-
-	if (desiredVel.Length() == 0 && body->GetLinearVelocity().Length() > 0) {
-		desiredVel = currVel;
-		desiredVel *= -0.1f * maxVel;
-
-	}
-	currVel = desiredVel - currVel;
-
-	body->ApplyForceToCenter(currVel, true);
-	body->ApplyForceToCenter(desiredVel, true);
-
-	std::cout << "currVel: " << currVel.Length() << "desiredVel: " << desiredVel.Length() << '\n'
-		<< "speed: " << body->GetLinearVelocity().Length();/**/
 
 	auto lowerBound = body->GetFixtureList()[0].GetAABB(0).lowerBound;
 	auto higherBound = body->GetFixtureList()[0].GetAABB(0).upperBound;
@@ -156,19 +137,10 @@ void Player::move(b2Vec2 velocity) {
 	
 
 	body->SetLinearVelocity(currVel);
+
 	std::cout << "speed: " << body->GetLinearVelocity().Length() << '\n'
 				<< "desiredPosition x: " << desiredPosition.x << " y: "<< desiredPosition.y << '\n';/**/
 
-	/*if (velocity.Length() == 0) {
-		currVel = body->GetLinearVelocity();
-		currVel *= map(maxVel, 0,100, 0,maxVel);
-	}
-	else {
-		currVel = velocity;
-		currVel *= maxVel;
-	}
-
-	body->SetLinearVelocity(currVel);
-	std::cout << "speed: " << body->GetLinearVelocity().Length()<<'\n';/**/
+	
 }
 

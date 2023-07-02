@@ -28,10 +28,18 @@ bool Game::init() {
 	Coordinator::getInstance()->RegisterComponent<Drawable>();
 	Coordinator::getInstance()->RegisterComponent<Transform>();
 	Coordinator::getInstance()->RegisterComponent<Body>();
-
 	drawingSystem = Coordinator::getInstance()->RegisterSystem<DrawingSystem>();
-
+	physicsSystem = Coordinator::getInstance()->RegisterSystem<PhysicsSystem>();
 	
+	Signature signature;
+	signature.set(Coordinator::getInstance()->GetComponentType<Drawable>());
+	signature.set(Coordinator::getInstance()->GetComponentType<Transform>());
+	Coordinator::getInstance()->SetSystemSignature<DrawingSystem>(signature);
+
+	signature = 0;
+	signature.set(Coordinator::getInstance()->GetComponentType<Body>());
+	signature.set(Coordinator::getInstance()->GetComponentType<Transform>());
+	Coordinator::getInstance()->SetSystemSignature<PhysicsSystem>(signature);
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	world = new b2World(gravity);
@@ -101,6 +109,8 @@ void Game::handleInput() {
 
 void Game::update() {
 	world->Step(1.0f / 60.0f, 1, 1);
+	physicsSystem.get()->update();
+
 	auto camera = getCamera();
 	b2Vec2 ss = player.getBody()->GetPosition();
 

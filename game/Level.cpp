@@ -130,16 +130,22 @@ bool Level::LoadFromFile(std::string filename)
 			    // Устанавливаем TextureRect каждого тайла
                 if (subRectToUse >= 0)
                 {
-                    /*Sprite* sprite = new Sprite();
-                    sprite->setTexture(tilesetImage);
-                    sprite->setTextureRect(subRects[subRectToUse]);
-                    sprite->setPosition(x * tileWidth, y * tileHeight);
-                    sprite->setScale(1,1);
-                    SDL_Rect textureRect = subRects[subRectToUse];
+                    Drawable sprite;
+                    sprite.texture = tilesetImage;
+                    sprite.srcrect = subRects[subRectToUse] ;
+                    sprite.dstrect = SDL_FRect {(float) x * tileWidth,(float) y * tileHeight, 0, 0 };
+                    
+                    Transform box;
+                    box.rect = sprite.dstrect;
                     
 
-                    layer.tiles.push_back(sprite);
+                    Entity entity = Coordinator::getInstance()->CreateEntity();
+                    Coordinator::getInstance()->AddComponent(entity, sprite);
+                    Coordinator::getInstance()->AddComponent(entity, box);
+                   //push_back(sprite);
                     /**/
+                        
+
                 }
 
            

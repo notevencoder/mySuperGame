@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "DebugRenderer.h"
 #include "DrawingSystem.h"
+#include "PhysicsSystem.h"
 #include <iostream>
 #include "Enemy.h"
 
@@ -36,6 +37,7 @@ private:
 	Player player;
 	DebugRenderer* debug;
 	std::shared_ptr<DrawingSystem> drawingSystem;
+	std::shared_ptr<PhysicsSystem> physicsSystem;
 	SDL_FRect camera;
 };
 
