@@ -3,6 +3,7 @@
 #include "Level.h"
 #include "Box2d\box2d.h"
 #include "Utils.h"
+#include "System.h"
 class Player
 {
 public:
@@ -24,6 +25,8 @@ private:
 	Sprite* sprite = nullptr;
 	Level* level;
 	SDL_FRect cam = {0,0,0,0};
+
+
 
 };
 

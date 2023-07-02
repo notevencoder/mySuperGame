@@ -1,5 +1,9 @@
 #include "Player.h"
 #include<iostream>
+#include "Coordinator.h"
+
+extern Coordinator coordinator;
+
 Player::Player() {
 	body = nullptr;
 	level = nullptr;
