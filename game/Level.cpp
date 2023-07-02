@@ -231,7 +231,24 @@ bool Level::LoadFromFile(std::string filename)
 
                         btype = b2BodyType::b2_staticBody;
                     }
-             
+                    if (objectName == "Enemy") {
+                        SDL_Texture* tex = SDL_CreateTextureFromSurface(renderer, IMG_Load("Dungeon_Character.png"));
+                        auto coor = Coordinator::getInstance();
+                        Drawable sprite;
+                        sprite.texture = tex;
+                        sprite.srcrect = {32,32,16,16};
+                        sprite.dstrect = object.rect;
+
+                        Transform box;
+                        box.rect = sprite.dstrect;
+
+                        Entity  enemy = coor->CreateEntity();
+                        coor->AddComponent(enemy, sprite);
+                        coor->AddComponent(enemy, box);
+                        
+
+                       
+                    }
 
                     if (layerElement.get()->getName() != "Player")
                      bodyFactory::getInstance().createRectBody(world, obj, btype);

@@ -2,7 +2,7 @@
 #include "Coordinator.h"
 
 
-
+static bool Debug = true;
 
 bool Game::init() {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
@@ -43,7 +43,7 @@ bool Game::init() {
 
 	b2Vec2 gravity(0.0f, 0.0f);
 	world = new b2World(gravity);
-	
+	//world->SetContactFilter();
 	
 	level = new Level(renderer, world);
 	level->LoadFromFile("level1/level1.tmx");
@@ -101,6 +101,13 @@ void Game::handleInput() {
 			std::cout << "down\n";
 			camera.y += 5;
 		}
+
+		if (keystates[SDL_SCANCODE_SPACE]) {
+			if (Debug)
+				Debug = false;
+			else
+				Debug = true;
+		}
 	if (keystates[SDL_SCANCODE_ESCAPE])
 		isRunning = false;
 
@@ -127,7 +134,9 @@ void Game::draw() {
 	SDL_RenderSetViewport(renderer, &vp);
 	
 	drawingSystem.get()->draw();
-	world->DebugDraw();
+	player.draw(renderer);
+	if (Debug)
+		world->DebugDraw();
 	
 	SDL_RenderPresent(renderer);
 }

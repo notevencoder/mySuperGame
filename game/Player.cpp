@@ -22,26 +22,39 @@ void Player::init(Level* lvl) {
 
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
+	bodyDef.fixedRotation = true;
 	bodyDef.position.Set(playerObject.rect.x + level->GetTileSize().x / 2 * (playerObject.rect.w / level->GetTileSize().x - 1),
 						 playerObject.rect.y + level->GetTileSize().y / 2 * (playerObject.rect.h / level->GetTileSize().y - 1));
 	
 	body = level->getWorld()->CreateBody(&bodyDef);
 	
+	
+	b2BodyDef bodyDef2;
+	bodyDef2.type = b2_kinematicBody;
+	bodyDef2.fixedRotation = true;
+	
+	bodyDef2.position.Set(playerObject.rect.x + 25 + level->GetTileSize().x / 2 * (playerObject.rect.w / level->GetTileSize().x - 1),
+						 playerObject.rect.y  + level->GetTileSize().y / 2 * (playerObject.rect.h / level->GetTileSize().y - 1));
+
+
 	b2FixtureDef fixDef;
 	b2PolygonShape shape;
-	shape.SetAsBox(playerObject.rect.w / 2, playerObject.rect.h / 2);
-	//fixDef.friction = 1;
-	fixDef.density = 1;
-
+	shape.SetAsBox(playerObject.rect.w / 2 , playerObject.rect.h / 2 );
 	fixDef.shape = &shape;
+	
+
+	b2FixtureDef fixDef2;
+	fixDef2.isSensor = true;
+	b2PolygonShape shape2;
+	shape2.SetAsBox(playerObject.rect.w / 2, playerObject.rect.h / 2, b2Vec2(20,0), 0);
+	fixDef2.shape = &shape2;
+
+
+
+	body->CreateFixture(&fixDef2);
 	body->CreateFixture(&fixDef);
-	/*
-	sprite = new Sprite();
-	sprite->setTexture(tex);
-	sprite->setTextureRect(SDL_Rect{ 0,0,16,16 });
-	sprite->setPosition(playerObject.rect.x, playerObject.rect.y);
-	sprite->setScale(1, 1);
-	/**/
+	
+
 	b2Vec2 pos = body->GetPosition();
 	cam = { pos.x - 400 / 2, pos.y - 200 / 2, 0,0 };
 	
