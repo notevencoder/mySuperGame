@@ -11,7 +11,7 @@
 #include "SDL2\SDL.h"
 #include "SDL2\SDL_image.h"
 #include "Box2d\box2d.h"
-#include "Vector2D.h"
+//#include "Vector2D.h"
 #include "bodyFactory.h"
 #include "Enemy.h"
 #include "Coordinator.h"
